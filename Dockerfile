@@ -1,12 +1,20 @@
-FROM node:20.5.1-bullseye-slim
-ENV NODE_ENV=production
+FROM node:20-alpine
 
-WORKDIR /public
+# Set working directory
+WORKDIR /app
 
-COPY ["package.json", "./"]
+# Copy package and app files 
+COPY package.json ./
+COPY package-lock.json ./
 
+# Install app dependencies
 RUN npm install
 
-COPY . .
+# Copy remaining files
+COPY . . 
 
-CMD [ "node", "index.js" ]
+# Expose port
+EXPOSE 3000
+
+# Default command
+CMD ["npm", "start"]
